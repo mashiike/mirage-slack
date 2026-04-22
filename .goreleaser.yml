@@ -1,0 +1,35 @@
+version: 2
+before:
+  hooks:
+    - go mod download
+builds:
+  - env:
+      - CGO_ENABLED=0
+    main: ./cmd/mirage-slack
+    binary: mirage-slack
+    ldflags:
+      - -s -w
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - arm64
+archives:
+  - name_template: "{{ .ProjectName }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+      - README.md
+      - CHANGELOG.md
+      - CREDITS
+release:
+  prerelease: false
+checksum:
+  name_template: "checksums.txt"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
