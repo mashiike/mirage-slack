@@ -8,7 +8,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/config v1.27.40
 	github.com/aws/aws-sdk-go-v2/service/ssm v1.52.7
 	github.com/fujiwara/ridge v0.13.1
-	github.com/google/go-jsonnet v0.20.0
+	github.com/google/go-jsonnet v0.22.0
 	github.com/slack-go/slack v0.22.0
 )
 
@@ -28,6 +28,7 @@ require (
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/pires/go-proxyproto v0.8.0 // indirect
-	gopkg.in/yaml.v2 v2.2.8 // indirect
-	sigs.k8s.io/yaml v1.1.0 // indirect
+	golang.org/x/crypto v0.45.0 // indirect
+	golang.org/x/sys v0.38.0 // indirect
+	sigs.k8s.io/yaml v1.4.0 // indirect
 )
