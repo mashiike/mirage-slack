@@ -382,9 +382,9 @@ func extractURLVerificationChallenge(body []byte) string {
 func extractChannelIDFromEvent(body []byte) string {
 	var envelope struct {
 		Event struct {
-			Channel        string `json:"channel"`
-			ChannelID      string `json:"channel_id"`
-			Item           struct {
+			Channel   string `json:"channel"`
+			ChannelID string `json:"channel_id"`
+			Item      struct {
 				Channel string `json:"channel"`
 			} `json:"item"`
 		} `json:"event"`
@@ -459,4 +459,3 @@ func decisionLabel(d routeDecision) string {
 	}
 	return "unknown"
 }
-

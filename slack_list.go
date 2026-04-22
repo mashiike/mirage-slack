@@ -76,7 +76,7 @@ type SlackListClient struct {
 	listID    string
 	botUserID string
 	teamID    string
-	teamURL   string // e.g. "https://example.slack.com/"
+	teamURL   string            // e.g. "https://example.slack.com/"
 	columnIDs map[string]string // key -> column_id
 }
 
