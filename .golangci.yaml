@@ -37,6 +37,8 @@ linters:
         - G204
         - G104
         - G304
+        - G704 # Log injection via taint analysis (design by contract: targetURL is from config)
+        - G706 # SSRF via taint analysis (design by contract: channel_id is from config)
     cyclop:
       max-complexity: 30
     depguard:

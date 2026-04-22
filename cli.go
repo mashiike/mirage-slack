@@ -105,7 +105,7 @@ func initConfigCommand(cmd *initConfigCmd) error {
 	} else if err != nil && !errors.Is(err, os.ErrNotExist) {
 		return fmt.Errorf("stat %q: %w", cmd.Output, err)
 	}
-	if err := os.WriteFile(cmd.Output, []byte(starterConfigJsonnet), 0o644); err != nil {
+	if err := os.WriteFile(cmd.Output, []byte(starterConfigJsonnet), 0o600); err != nil {
 		return fmt.Errorf("write %q: %w", cmd.Output, err)
 	}
 	slog.Info("wrote starter config", "path", cmd.Output)
