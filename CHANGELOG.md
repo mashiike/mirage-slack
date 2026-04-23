@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.2.0](https://github.com/mashiike/mirage-slack/compare/v0.1.1...v0.2.0) - 2026-04-23
+- docs: note RIDGE_STREAMING_RESPONSE for Lambda RESPONSE_STREAM mode by @mashiike in https://github.com/mashiike/mirage-slack/pull/13
+- feat: derive slack.list_name default from command.name by @mashiike in https://github.com/mashiike/mirage-slack/pull/15
+- change tagpr labels by @mashiike in https://github.com/mashiike/mirage-slack/pull/17
+- feat: add /mirage-slack prune-list subcommand for bot-owned list cleanup by @mashiike in https://github.com/mashiike/mirage-slack/pull/16
+
 ## [v0.1.1](https://github.com/mashiike/mirage-slack/compare/v0.1.0...v0.1.1) - 2026-04-23
 - feat: make Slack endpoint paths configurable by @mashiike in https://github.com/mashiike/mirage-slack/pull/11
 
