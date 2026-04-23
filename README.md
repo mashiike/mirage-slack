@@ -95,6 +95,17 @@ On startup, mirage-slack:
 
 No separate `init` / migration step is required.
 
+#### AWS Lambda: match the Function URL Invoke Mode
+
+mirage-slack relies on [`fujiwara/ridge`](https://github.com/fujiwara/ridge) to adapt the HTTP handler to the Lambda runtime. Ridge defaults to the buffered response format (`{statusCode, headers, body, ...}`). If the Lambda Function URL's Invoke Mode is set to `RESPONSE_STREAM`, set the `RIDGE_STREAMING_RESPONSE=true` environment variable so ridge switches to the streaming response format. When the two disagree, Function URL cannot unwrap the response and the raw Lambda proxy envelope leaks through to Slack as a JSON string.
+
+| Function URL Invoke Mode | Lambda environment variable |
+|---|---|
+| `BUFFERED` (default) | — |
+| `RESPONSE_STREAM` | `RIDGE_STREAMING_RESPONSE=true` |
+
+Slack slash commands complete within the 3-second ACK window, so `BUFFERED` is the natural choice unless you already have a reason to use `RESPONSE_STREAM`.
+
 ### 4. Register a development endpoint
 
 From any channel:
