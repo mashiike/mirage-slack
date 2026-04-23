@@ -15,6 +15,7 @@ type Config struct {
 	Slack   SlackConfig   `json:"slack"`
 	Command CommandConfig `json:"command"`
 	Routing RoutingConfig `json:"routing"`
+	Server  ServerConfig  `json:"server"`
 }
 
 type SlackConfig struct {
@@ -32,6 +33,29 @@ type CommandConfig struct {
 type RoutingConfig struct {
 	DefaultEndpoint        string `json:"default_endpoint"`
 	DefaultEndpointProtect *bool  `json:"default_endpoint_protect"`
+}
+
+// ServerConfig overrides the HTTP mount points exposed by mirage-slack.
+type ServerConfig struct {
+	Paths ServerPaths `json:"paths"`
+}
+
+// ServerPaths maps each Slack entrypoint to its URL path. Empty fields fall
+// back to the defaults shown in DefaultServerPaths.
+type ServerPaths struct {
+	Commands    string `json:"commands"`
+	Interactive string `json:"interactive"`
+	Events      string `json:"events"`
+}
+
+// DefaultServerPaths returns the default URL paths used when the config
+// leaves the corresponding fields empty.
+func DefaultServerPaths() ServerPaths {
+	return ServerPaths{
+		Commands:    "/slack/commands",
+		Interactive: "/slack/interactive",
+		Events:      "/slack/events",
+	}
 }
 
 // LoadConfig evaluates the jsonnet file at path and decodes it into a Config.
@@ -73,6 +97,16 @@ func (c *Config) applyDefaults() {
 		t := true
 		c.Routing.DefaultEndpointProtect = &t
 	}
+	defaults := DefaultServerPaths()
+	if c.Server.Paths.Commands == "" {
+		c.Server.Paths.Commands = defaults.Commands
+	}
+	if c.Server.Paths.Interactive == "" {
+		c.Server.Paths.Interactive = defaults.Interactive
+	}
+	if c.Server.Paths.Events == "" {
+		c.Server.Paths.Events = defaults.Events
+	}
 }
 
 // Validate checks required fields.
@@ -82,6 +116,45 @@ func (c *Config) Validate() error {
 	}
 	if c.Slack.BotToken == "" {
 		return fmt.Errorf("slack.bot_token is required")
+	}
+	return c.validateServerPaths()
+}
+
+var reservedServerPaths = map[string]string{
+	"/healthz": "reserved for the health check endpoint",
+}
+
+// invalidServerPathChars are rejected in configured paths. '{' and '}' would
+// be interpreted as net/http.ServeMux wildcards; whitespace would break the
+// "METHOD PATH" pattern syntax. Either case causes mux.Handle to panic at
+// startup, so we surface the problem as a Validate error instead.
+const invalidServerPathChars = "{} \t"
+
+func (c *Config) validateServerPaths() error {
+	entries := []struct {
+		key   string
+		value string
+	}{
+		{"server.paths.commands", c.Server.Paths.Commands},
+		{"server.paths.interactive", c.Server.Paths.Interactive},
+		{"server.paths.events", c.Server.Paths.Events},
+	}
+	seen := map[string]string{}
+	for _, e := range entries {
+		if !strings.HasPrefix(e.value, "/") {
+			return fmt.Errorf("%s must start with '/': %q", e.key, e.value)
+		}
+		if i := strings.IndexAny(e.value, invalidServerPathChars); i >= 0 {
+			return fmt.Errorf("%s contains disallowed character %q (ServeMux wildcards and whitespace are not supported): %q",
+				e.key, string(e.value[i]), e.value)
+		}
+		if reason, ok := reservedServerPaths[e.value]; ok {
+			return fmt.Errorf("%s cannot be %q: %s", e.key, e.value, reason)
+		}
+		if other, ok := seen[e.value]; ok {
+			return fmt.Errorf("%s conflicts with %s: both are %q", e.key, other, e.value)
+		}
+		seen[e.value] = e.key
 	}
 	return nil
 }

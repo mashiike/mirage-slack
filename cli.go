@@ -90,6 +90,15 @@ local env = std.native('env');
     // the SigningSecret before forwarding to the default endpoint.
     // default_endpoint_protect: true,
   },
+  server: {
+    // Override the URL paths for each Slack entrypoint. Omitted fields keep
+    // the defaults shown below.
+    // paths: {
+    //   commands: '/slack/commands',
+    //   interactive: '/slack/interactive',
+    //   events: '/slack/events',
+    // },
+  },
 }
 `
 

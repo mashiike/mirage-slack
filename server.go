@@ -38,9 +38,9 @@ func (a *App) Serve(ctx context.Context, addr string) error {
 // Handler builds the HTTP handler tree.
 func (a *App) Handler() http.Handler {
 	mux := http.NewServeMux()
-	mux.HandleFunc("POST /slack/commands", a.HandleSlashCommand)
-	mux.HandleFunc("POST /slack/interactive", a.HandleInteractive)
-	mux.HandleFunc("POST /slack/events", a.HandleEvent)
+	mux.HandleFunc("POST "+a.cfg.Server.Paths.Commands, a.HandleSlashCommand)
+	mux.HandleFunc("POST "+a.cfg.Server.Paths.Interactive, a.HandleInteractive)
+	mux.HandleFunc("POST "+a.cfg.Server.Paths.Events, a.HandleEvent)
 	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write([]byte("ok"))
