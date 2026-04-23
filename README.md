@@ -89,7 +89,7 @@ mirage-slack run --config=config.jsonnet --addr=:8080
 On startup, mirage-slack:
 
 1. Calls `auth.test` to resolve the bot's user ID and team URL.
-2. Searches `files.list?types=lists` for a bot-owned list titled `mirage-slack` (override with `slack.list_name`).
+2. Searches `files.list?types=lists` for a bot-owned list whose title matches `slack.list_name` (defaults to the slash command name without the leading slash; e.g. `/mirage-slack` → `mirage-slack`).
 3. If no list is found, creates one via `slackLists.create` with mirage-slack's fixed schema.
 4. Caches the list metadata (column IDs, permalink components) and starts serving HTTP.
 
@@ -152,7 +152,7 @@ Config is a [Jsonnet](https://jsonnet.org/) file. Two native functions are regis
 |---|---|---|---|---|
 | `slack.signing_secret` | string | ✓ | | Slack App Signing Secret. |
 | `slack.bot_token` | string | ✓ | | Bot User OAuth Token (`xoxb-…`). |
-| `slack.list_name` | string | | `mirage-slack` | Title of the bot-owned Slack List. |
+| `slack.list_name` | string | | `command.name` without the leading `/` | Title of the bot-owned Slack List. Deriving from the command name keeps multi-instance deployments collision-free with no extra config. |
 | `command.name` | string | | `/mirage-slack` | Slash command name. |
 | `routing.default_endpoint` | string | | — | Forward target for requests whose channel is not bound to any entry. |
 | `routing.default_endpoint_protect` | bool | | `true` | Verify the Slack signature before forwarding to `default_endpoint`. |

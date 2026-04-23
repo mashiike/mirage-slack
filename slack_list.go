@@ -81,11 +81,9 @@ type SlackListClient struct {
 }
 
 // NewSlackListClient constructs a client. Call Ensure before any read/write
-// operation to populate list_id / column IDs.
+// operation to populate list_id / column IDs. listName must be non-empty;
+// Config.applyDefaults derives it from the configured slash command name.
 func NewSlackListClient(token, listName string) *SlackListClient {
-	if listName == "" {
-		listName = "mirage-slack"
-	}
 	return &SlackListClient{
 		token:    token,
 		listName: listName,

@@ -23,6 +23,9 @@ type SlackConfig struct {
 	BotToken      string `json:"bot_token"`
 	// ListName identifies the bot-owned Slack List. At run startup mirage-slack
 	// looks up a bot-owned list with this title; if none exists, it creates one.
+	// Defaults to the slash command name without the leading slash (e.g. command
+	// "/mirage-slack" yields "mirage-slack"), so running multiple instances with
+	// distinct command names yields distinct list titles with zero extra config.
 	ListName string `json:"list_name"`
 }
 
@@ -91,7 +94,7 @@ func (c *Config) applyDefaults() {
 		c.Command.Name = "/" + c.Command.Name
 	}
 	if c.Slack.ListName == "" {
-		c.Slack.ListName = "mirage-slack"
+		c.Slack.ListName = strings.TrimPrefix(c.Command.Name, "/")
 	}
 	if c.Routing.DefaultEndpointProtect == nil {
 		t := true
