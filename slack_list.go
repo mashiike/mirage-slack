@@ -417,6 +417,21 @@ func (c *SlackListClient) GrantViewAccessToChannel(ctx context.Context, channelI
 	return c.call(ctx, "slackLists.access.set", body, nil)
 }
 
+// DeleteList removes a bot-owned Slack List via files.delete. Refuses to
+// delete the currently active list (file_id equal to ListID()) so the caller
+// cannot accidentally wipe the live entries. slackLists.delete returns
+// unknown_method, but files.delete works against list-type files.
+func (c *SlackListClient) DeleteList(ctx context.Context, fileID string) error {
+	if fileID == "" {
+		return fmt.Errorf("file_id is required")
+	}
+	if fileID == c.ListID() {
+		return fmt.Errorf("refuse to delete the active list (file_id=%s); swap slack.list_name to a different title first", fileID)
+	}
+	body := map[string]any{"file": fileID}
+	return c.call(ctx, "files.delete", body, nil)
+}
+
 // Unregister deletes the entry by name.
 func (c *SlackListClient) Unregister(ctx context.Context, name string) error {
 	existing, err := c.findByName(ctx, name)
