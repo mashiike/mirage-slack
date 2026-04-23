@@ -131,6 +131,7 @@ Subsequent slash commands / interactivity / events in that channel are forwarded
 | `/mirage-slack launch <name> [--protect]` | Bind the entry to the current channel. With `--protect`, mirage-slack verifies the Slack signature before forwarding. |
 | `/mirage-slack terminate <name>` | Unbind the entry. The registration is kept so you can `launch` again later. |
 | `/mirage-slack list` | Grant the current channel view access to the list file and post its URL (Slack unfurls it). |
+| `/mirage-slack prune-list <file_id>` | Delete a bot-owned Slack List by its `file_id` (the `F…` identifier visible in `files.list` / Slack API tools). Useful for cleaning up orphan lists left behind after `slack.list_name` (or `command.name`) changes. The currently active list is refused to avoid foot-gunning. |
 
 Rules:
 

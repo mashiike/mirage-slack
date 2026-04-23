@@ -182,6 +182,7 @@ type slashCLI struct {
 	Launch     launchCmd     `cmd:"" help:"launch an environment in the current channel"`
 	Terminate  terminateCmd  `cmd:"" help:"terminate a launched environment"`
 	List       listCmd       `cmd:"" help:"list all environments"`
+	PruneList  pruneListCmd  `cmd:"prune-list" help:"delete a bot-owned Slack List by file_id (use for orphans left behind after list_name changes)"`
 }
 
 type registerCmd struct {
@@ -203,6 +204,10 @@ type terminateCmd struct {
 }
 
 type listCmd struct{}
+
+type pruneListCmd struct {
+	FileID string `arg:"" name:"file_id" help:"Slack file_id of the bot-owned list to delete (F…)"`
+}
 
 // handleInternalSlashCommand parses cmd.Text with kong and dispatches.
 func (a *App) handleInternalSlashCommand(ctx context.Context, w http.ResponseWriter, cmd SlashCommand) {
@@ -281,6 +286,12 @@ func (a *App) runSlashSubcommand(ctx context.Context, kctx *kong.Context, cmd Sl
 			return "", fmt.Errorf("list permalink unavailable")
 		}
 		return permalink, nil
+
+	case "prune-list <file_id>":
+		if err := a.list.DeleteList(ctx, cli.PruneList.FileID); err != nil {
+			return "", err
+		}
+		return fmt.Sprintf("pruned bot-owned list `%s`", cli.PruneList.FileID), nil
 	}
 	return "", fmt.Errorf("unknown subcommand: %s", kctx.Command())
 }
@@ -435,6 +446,7 @@ func usageHelp(command string) string {
 • `+"`%s launch <name> [--protect]`"+` — Bind this channel to the entry and start forwarding (`+"`--protect`"+` enables SigningSecret verification)
 • `+"`%s terminate <name>`"+`          — Stop forwarding (registration is kept)
 • `+"`%s list`"+`                      — Share the list file with this channel (view-only) and post its link
+• `+"`%s prune-list <file_id>`"+`      — Delete a bot-owned Slack List by file_id (for orphans left over after list_name changes)
 
 *Example:*
 `+"```"+`
@@ -442,7 +454,7 @@ func usageHelp(command string) string {
 %s launch dev1
 %s list
 `+"```",
-		command, command, command, command, command, command,
+		command, command, command, command, command, command, command,
 		command, command, command)
 }
 
