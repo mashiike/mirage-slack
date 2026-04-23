@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.1.1](https://github.com/mashiike/mirage-slack/compare/v0.1.0...v0.1.1) - 2026-04-23
+- feat: make Slack endpoint paths configurable by @mashiike in https://github.com/mashiike/mirage-slack/pull/11
+
 ## [v0.1.0](https://github.com/mashiike/mirage-slack/compare/v0.0.0...v0.1.0) - 2026-04-22
 - Feature/init by @mashiike in https://github.com/mashiike/mirage-slack/pull/1
 - Bump github.com/alecthomas/kong from 1.6.0 to 1.15.0 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/10
