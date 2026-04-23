@@ -73,8 +73,10 @@ local env = std.native('env');
     // Bot User OAuth Token (xoxb-...).
     bot_token: env('SLACK_BOT_TOKEN'),
     // Title of the bot-owned Slack List that stores the environment entries.
-    // Optional; defaults to 'mirage-slack'. mirage-slack will discover a list
-    // with this title on startup and create one if it does not exist.
+    // Optional; defaults to the slash command name without the leading slash
+    // (e.g. '/mirage-slack' -> 'mirage-slack'). Override to run multiple
+    // instances that share a single slash command name, or to migrate an
+    // existing list whose title differs from the derived default.
     // list_name: 'mirage-slack',
   },
   command: {
