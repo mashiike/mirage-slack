@@ -40,3 +40,5 @@
 	vPrefix = true
 	releaseBranch = main
 	versionFile = version.go
+    majorLabels = tagpr:major
+    minorLabels = tagpr:minor
