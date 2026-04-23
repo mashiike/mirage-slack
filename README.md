@@ -46,6 +46,8 @@ Create an app at [api.slack.com/apps](https://api.slack.com/apps) and configure:
 | Interactivity & Shortcuts | Request URL: `https://<host>/slack/interactive` |
 | Event Subscriptions | Request URL: `https://<host>/slack/events` |
 
+The URL paths shown above (`/slack/commands`, `/slack/interactive`, `/slack/events`) are the defaults mirage-slack listens on. If your hosting layer requires different paths, override them via `server.paths.*` in the config and register the matching URLs in the Slack App settings.
+
 **Minimal Bot Token scopes**:
 
 - `commands` (receive slash commands)
@@ -143,6 +145,9 @@ Config is a [Jsonnet](https://jsonnet.org/) file. Two native functions are regis
 | `command.name` | string | | `/mirage-slack` | Slash command name. |
 | `routing.default_endpoint` | string | | — | Forward target for requests whose channel is not bound to any entry. |
 | `routing.default_endpoint_protect` | bool | | `true` | Verify the Slack signature before forwarding to `default_endpoint`. |
+| `server.paths.commands` | string | | `/slack/commands` | URL path for the slash command entrypoint. |
+| `server.paths.interactive` | string | | `/slack/interactive` | URL path for the interactive component entrypoint. |
+| `server.paths.events` | string | | `/slack/events` | URL path for the Events API entrypoint. |
 
 CLI flags:
 
