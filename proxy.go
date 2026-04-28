@@ -6,6 +6,7 @@ import (
 	"io"
 	"log/slog"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -43,17 +44,29 @@ var httpClient = &http.Client{
 // relying on mirage-slack to pipe a late HTTP response. In local / container
 // deployments, the goroutine runs normally.
 func (a *App) forwardRequest(w http.ResponseWriter, r *http.Request, bodyBytes []byte, targetURL, envName string) {
+	base, err := url.Parse(targetURL)
+	if err != nil {
+		slog.Error("forward target parse",
+			"url", targetURL, "env", envName, "error", err,
+		)
+		http.Error(w, "forward target invalid: "+err.Error(), http.StatusBadGateway)
+		return
+	}
+	forwardURL := base.JoinPath(r.URL.Path)
+	forwardURL.RawQuery = r.URL.RawQuery
+	forwardURLStr := forwardURL.String()
+
 	forwardCtx, cancel := context.WithTimeout(context.WithoutCancel(r.Context()), forwardTotalTimeout)
 
 	started := time.Now()
-	slog.Info("forward start", "url", targetURL, "env", envName, "bytes", len(bodyBytes))
+	slog.Info("forward start", "url", forwardURLStr, "env", envName, "bytes", len(bodyBytes))
 
 	respCh := make(chan *http.Response, 1)
 	errCh := make(chan error, 1)
 
 	go func() {
 		defer cancel()
-		req, err := http.NewRequestWithContext(forwardCtx, http.MethodPost, targetURL, bytes.NewReader(bodyBytes))
+		req, err := http.NewRequestWithContext(forwardCtx, http.MethodPost, forwardURLStr, bytes.NewReader(bodyBytes))
 		if err != nil {
 			errCh <- err
 			return
@@ -83,7 +96,7 @@ func (a *App) forwardRequest(w http.ResponseWriter, r *http.Request, bodyBytes [
 			}
 		}()
 		slog.Info("forward done",
-			"url", targetURL, "env", envName,
+			"url", forwardURLStr, "env", envName,
 			"status", resp.StatusCode,
 			"duration_ms", time.Since(started).Milliseconds(),
 		)
@@ -94,14 +107,14 @@ func (a *App) forwardRequest(w http.ResponseWriter, r *http.Request, bodyBytes [
 		}
 	case err := <-errCh:
 		slog.Error("forward failed",
-			"url", targetURL, "env", envName,
+			"url", forwardURLStr, "env", envName,
 			"error", err,
 			"duration_ms", time.Since(started).Milliseconds(),
 		)
 		http.Error(w, "forward failed: "+err.Error(), http.StatusBadGateway)
 	case <-ackCtx.Done():
 		slog.Warn("forward ack timeout (endpoint must reply via response_url)",
-			"url", targetURL, "env", envName,
+			"url", forwardURLStr, "env", envName,
 			"duration_ms", time.Since(started).Milliseconds(),
 		)
 		w.WriteHeader(http.StatusOK)
@@ -109,7 +122,7 @@ func (a *App) forwardRequest(w http.ResponseWriter, r *http.Request, bodyBytes [
 			select {
 			case resp := <-respCh:
 				slog.Info("forward late reply",
-					"url", targetURL, "env", envName,
+					"url", forwardURLStr, "env", envName,
 					"status", resp.StatusCode,
 					"duration_ms", time.Since(started).Milliseconds(),
 				)
@@ -121,7 +134,7 @@ func (a *App) forwardRequest(w http.ResponseWriter, r *http.Request, bodyBytes [
 				}
 			case err := <-errCh:
 				slog.Error("forward late failure",
-					"url", targetURL, "env", envName,
+					"url", forwardURLStr, "env", envName,
 					"error", err,
 					"duration_ms", time.Since(started).Milliseconds(),
 				)
