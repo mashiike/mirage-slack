@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.2.1](https://github.com/mashiike/mirage-slack/compare/v0.2.0...v0.2.1) - 2026-04-28
+- fix: preserve inbound URL path when forwarding to target endpoint by @mashiike in https://github.com/mashiike/mirage-slack/pull/18
+
 ## [v0.2.0](https://github.com/mashiike/mirage-slack/compare/v0.1.1...v0.2.0) - 2026-04-23
 - docs: note RIDGE_STREAMING_RESPONSE for Lambda RESPONSE_STREAM mode by @mashiike in https://github.com/mashiike/mirage-slack/pull/13
 - feat: derive slack.list_name default from command.name by @mashiike in https://github.com/mashiike/mirage-slack/pull/15
