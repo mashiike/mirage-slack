@@ -1,5 +1,14 @@
 # Changelog
 
+## [v0.2.2](https://github.com/mashiike/mirage-slack/compare/v0.2.1...v0.2.2) - 2026-08-25
+
+- build(deps): Bump reviewdog/action-actionlint from 1.72.0 to 1.73.0 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/38
+- build(deps): Bump actions/setup-go from 6.4.0 to 7.0.0 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/39
+- build(deps): Bump goreleaser/goreleaser-action from 6.4.0 to 7.2.3 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/33
+- chore: bump go module dependencies by @mashiike in https://github.com/mashiike/mirage-slack/pull/42
+- build(deps): Bump actions/checkout from 6.0.2 to 7.0.1 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/40
+- build(deps): Bump Songmu/tagpr from 1.18.3 to 1.20.1 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/36
+
 ## [v0.2.1](https://github.com/mashiike/mirage-slack/compare/v0.2.0...v0.2.1) - 2026-04-28
 - fix: preserve inbound URL path when forwarding to target endpoint by @mashiike in https://github.com/mashiike/mirage-slack/pull/18
 
