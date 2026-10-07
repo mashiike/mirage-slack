@@ -7,13 +7,13 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.41.7
 	github.com/aws/aws-sdk-go-v2/config v1.32.17
 	github.com/aws/aws-sdk-go-v2/service/ssm v1.68.6
-	github.com/fujiwara/ridge v0.13.1
+	github.com/fujiwara/ridge v0.14.0
 	github.com/google/go-jsonnet v0.22.0
 	github.com/slack-go/slack v0.27.0
 )
 
 require (
-	github.com/aws/aws-lambda-go v1.48.0 // indirect
+	github.com/aws/aws-lambda-go v1.55.1 // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.19.16 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.23 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.23 // indirect
@@ -27,7 +27,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.42.1 // indirect
 	github.com/aws/smithy-go v1.25.1 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
-	github.com/pires/go-proxyproto v0.8.0 // indirect
+	github.com/pires/go-proxyproto v0.15.0 // indirect
 	golang.org/x/crypto v0.52.0 // indirect
 	golang.org/x/sys v0.45.0 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
