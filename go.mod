@@ -9,7 +9,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ssm v1.73.7
 	github.com/fujiwara/ridge v0.14.0
 	github.com/google/go-jsonnet v0.22.0
-	github.com/slack-go/slack v0.27.0
+	github.com/slack-go/slack v0.36.0
 )
 
 require (
