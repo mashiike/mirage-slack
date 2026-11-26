@@ -471,6 +471,13 @@ https://github.com/aws/aws-sdk-go-v2
    See the License for the specific language governing permissions and
    limitations under the License.
 
+----------------------------------------------------------------
+NOTICE
+----------------------------------------------------------------
+AWS SDK for Go
+Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Copyright 2014-2015 Stripe, Inc.
+
 ================================================================
 
 github.com/aws/aws-sdk-go-v2/config
@@ -3355,6 +3362,11 @@ https://github.com/aws/smithy-go
       defend, and hold each Contributor harmless for any liability
       incurred by, or claims asserted against, such Contributor by reason
       of your accepting any such warranty or additional liability.
+
+----------------------------------------------------------------
+NOTICE
+----------------------------------------------------------------
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
 ================================================================
 

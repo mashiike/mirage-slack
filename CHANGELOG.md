@@ -1,5 +1,23 @@
 # Changelog
 
+## [v0.2.2](https://github.com/mashiike/mirage-slack/compare/v0.2.1...v0.2.2) - 2026-11-26
+
+- build(deps): Bump reviewdog/action-actionlint from 1.72.0 to 1.73.0 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/38
+- build(deps): Bump actions/setup-go from 6.4.0 to 7.0.0 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/39
+- build(deps): Bump goreleaser/goreleaser-action from 6.4.0 to 7.2.3 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/33
+- chore: bump go module dependencies by @mashiike in https://github.com/mashiike/mirage-slack/pull/42
+- build(deps): Bump actions/checkout from 6.0.2 to 7.0.1 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/40
+- build(deps): Bump Songmu/tagpr from 1.18.3 to 1.20.1 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/36
+- build(deps): Bump reviewdog/action-misspell from 1.27.0 to 1.30.3 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/67
+- build(deps): Bump the aws-sdk-go-v2 group across 1 directory with 3 updates by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/21
+- build(deps): Bump github.com/fujiwara/ridge from 0.13.1 to 0.14.0 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/59
+- build(deps): Bump github.com/alecthomas/kong from 1.16.0 to 1.17.0 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/71
+- build(deps): Bump github.com/slack-go/slack from 0.27.0 to 0.36.0 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/74
+- build(deps): Bump reviewdog/action-golangci-lint from 2.10.0 to 2.10.2 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/56
+- build(deps): Bump reviewdog/action-actionlint from 1.73.0 to 1.80.6 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/68
+- build(deps): Bump Songmu/tagpr from 1.20.1 to 1.21.4 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/69
+- build(deps): Bump goreleaser/goreleaser-action from 7.2.3 to 7.3.0 by @dependabot[bot] in https://github.com/mashiike/mirage-slack/pull/70
+
 ## [v0.2.1](https://github.com/mashiike/mirage-slack/compare/v0.2.0...v0.2.1) - 2026-04-28
 - fix: preserve inbound URL path when forwarding to target endpoint by @mashiike in https://github.com/mashiike/mirage-slack/pull/18
 
